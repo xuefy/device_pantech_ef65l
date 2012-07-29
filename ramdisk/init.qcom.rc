@@ -1,0 +1,170 @@
+# Copyright (c) 2009-2011, Code Aurora Forum. All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of Code Aurora nor
+#       the names of its contributors may be used to endorse or promote
+#       products derived from this software without specific prior written
+#       permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+on boot-pause
+    exec system/bin/battery_charging
+
+on boot
+    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
+    chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /proc/bluetooth/sleep/proto
+#+++ BRCM[Excelt], BTL-A
+    chown bluetooth bluetooth /proc/bluetooth/sleep/btwake
+    chown bluetooth bluetooth /proc/buuetooth/sleep/hostwake
+    chown system system /sys/module/sco/parameters/disable_esco
+
+    chmod 0666 /sys/module/bluetooth_power/parameters/power
+    chmod 0664 /proc/bluetooth/sleep/proto
+    chmod 0664 /proc/bluetooth/sleep/btwake
+    chmod 0666 /proc/buuetooth/sleep/hostwake
+    chown bluetooth bluetooth /dev/ttyHS0
+    chmod 0664 /sys/class/rfkill/rfkill0/type
+    chmod 0664 /sys/class/rfkill/rfkill0/state
+    chmod 0666 /dev/ttyHS0
+    chown bluetooth bluetooth /sys/devices/platform/msm_serial_hs.0/clock
+    chown bluetooth bluetooth /sys/devices/platform/bt_power.0/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/devices/platform/bt_power.0/rfkill/rfkill0/state
+    chmod 0664 /sys/devices/platform/msm_serial_hs.0/clock
+    chmod 0664 /sys/devices/platform/bt_power.0/rfkill/rfkill0/type
+    chmod 0664 /sys/devices/platform/bt_power.0/rfkill/rfkill0/state
+#--- BRCM[Excelt], BTL-A
+    # Create the directories used by the Wireless subsystem
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+    symlink /persist/qcom_wlan_nv.bin /etc/firmware/wlan/qcom_wlan_nv.bin
+    symlink /data/hostapd/qcom_cfg.ini /etc/firmware/wlan/qcom_cfg.ini
+    setprop wifi.interface wlan0
+
+# --- 2011-07-28 KSJ_BT_DEVICE Bluez Initial
+     # Create directories for wiper services
+    mkdir /data/wpstiles/ 0777 shell
+    mkdir /data/wiper 0777 location qcom_oncrpc
+    mkdir /data/vt/ 0777 shell
+
+     # Create directories for gpsone_daemon services
+    mkdir /data/misc/gpsone_d 0770 gpsone_d qcom_oncrpc
+
+     # Create directory from IMS services
+    mkdir /data/shared 0777
+
+
+    #Set SUID bit for usbhub
+    chmod 4755 /system/bin/usbhub
+    chmod 755 /system/bin/usbhub_init
+
+    #Provide the access to hostapd.conf only to root and group
+    chmod 0660 /data/hostapd/hostapd.conf
+
+    #port-bridge
+    chmod 0660 /dev/smd0
+    chown system system /dev/smd0
+
+    chmod 0660 /dev/ttyGS0
+    chown system system /dev/ttyGS0
+
+    chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
+
+    # Remove write permissions to video related nodes
+    chmod 0664 /sys/devices/virtual/graphics/fb1/hpd
+    chmod 0664 /sys/devices/virtual/graphics/fb1/video_mode
+    chmod 0664 /sys/devices/virtual/graphics/fb1/format_3d
+
+    # Change owner and group for media server and surface flinger
+    chown media system /sys/devices/virtual/graphics/fb1/format_3d
+
+	# [LS5] 2011.10.11 for remove root permission
+	chown root graphics /sys/class/graphics/fb1/hpd
+	chmod 0664 /sys/class/graphics/fb1/hpd
+
+    #increase dirty_writeback_interval
+    write /proc/sys/vm/dirty_writeback_centisecs 500
+    write /proc/sys/vm/dirty_expire_centisecs 200
+
+    #For netmgr daemon to inform the USB driver of the correct transport
+    chown radio radio /sys/class/usb_composite/rmnet_smd_sdio/transport
+
+    #To allow interfaces to get v6 address when tethering is enabled
+    write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet1/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet2/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet3/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet4/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet5/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet6/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet7/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio0/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio1/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio2/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio3/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio4/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio5/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio6/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio7/accept_ra 2
+
+# on emmc mount the partition containing firmware
+on emmc-fs
+    wait /dev/block/mmcblk0p13
+    mount ext4 /dev/block/mmcblk0p13 /system ro barrier=1
+    wait /dev/block/mmcblk0p14
+    exec /system/bin/mmcblk_utils ext4 /dev/block/mmcblk0p14
+    exec /system/bin/e2fsck -p /dev/block/mmcblk0p14
+    mount ext4 /dev/block/mmcblk0p14 /data nosuid nodev noatime barrier=1
+    mount ext4 /dev/block/mmcblk0p14 /data nosuid nodev noatime remount noauto_da_alloc
+    mount ext4 /dev/block/mmcblk0p14 /data nosuid nodev noatime remount discard
+    wait /dev/block/mmcblk0p15
+    exec /system/bin/mmcblk_utils ext4 /dev/block/mmcblk0p15
+    exec /system/bin/e2fsck -p /dev/block/mmcblk0p15  
+    mount ext4 /dev/block/mmcblk0p15 /persist nosuid nodev noatime barrier=1
+    wait /dev/block/mmcblk0p16
+    exec /system/bin/mmcblk_utils ext4 /dev/block/mmcblk0p16
+    exec /system/bin/e2fsck -p /dev/block/mmcblk0p16  
+    mount ext4 /dev/block/mmcblk0p16 /cache nosuid nodev noatime barrier=1
+    wait /dev/block/mmcblk0p25
+    exec /system/bin/mmcblk_utils fat16 /dev/block/mmcblk0p25
+    wait /dev/block/mmcblk0p26
+    exec /system/bin/mmcblk_utils fat /dev/block/mmcblk0p26
+
+   mkdir /tombstones 0771 system system
+   #20110411 choiseulkee chg for FEATURE_SKY
+   #mount ext4 /dev/block/mmcblk0p16 /tombstones nosuid nodev barrier=1
+   wait /dev/block/mmcblk0p17
+   exec /system/bin/mmcblk_utils ext4 /dev/block/mmcblk0p17
+   mount ext4 /dev/block/mmcblk0p17 /tombstones nosuid nodev barrier=1
+   mkdir /tombstones/modem 0771 system system
+   mkdir /tombstones/mdm 0771 system system
+   mkdir /tombstones/lpass 0771 system system
+   mkdir /firmware 0771 system system
+   wait /dev/block/mmcblk0p1
+   mount vfat /dev/block/mmcblk0p1 /firmware ro shortname=lower
+   exec /system/bin/sh /system/etc/init.qcom.modem_links.sh
+
+    write /sys/devices/i2c-0/0-0024/cyttsp_update_fw 1

@@ -1,0 +1,18 @@
+# mount point	fstype		device			[device2]
+/fotamodem		vfat		/dev/block/mmcblk0p1
+/sbl1			emmc		/dev/block/mmcblk0p2
+/sbl2			emmc		/dev/block/mmcblk0p3
+/rpm			emmc		/dev/block/mmcblk0p5
+/sbl3			emmc		/dev/block/mmcblk0p6
+/lk				emmc		/dev/block/mmcblk0p7
+/boot			emmc		/dev/block/mmcblk0p8
+/tz				emmc		/dev/block/mmcblk0p9
+/system			ext4		/dev/block/mmcblk0p13
+/info			emmc		/dev/block/mmcblk0p10
+/data			ext4		/dev/block/mmcblk0p14
+/cache			ext4		/dev/block/mmcblk0p16
+/misc			emmc		/dev/block/mmcblk0p17
+/recovery		emmc		/dev/block/mmcblk0p18
+/mdm			emmc		/dev/block/mmcblk0p19
+/sdcard			vfat		/dev/block/mmcblk0p26
+/emmc			vfat		/dev/block/mmcblk1p1

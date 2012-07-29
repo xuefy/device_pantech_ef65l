@@ -1,0 +1,7 @@
+# Add device specific blobs here
+# NFC
+lib/libpn544_fw.so
+
+# Wi-Fi
+etc/wl/nvram.txt
+etc/wl/nvram_murata_b2_65l.txt
