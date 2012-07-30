@@ -42,7 +42,7 @@ BOARD_KERNEL_BASE           := 0x40200000
 BOARD_FORCE_RAMDISK_ADDRESS := 0x41300000
 BOARD_KERNEL_PAGESIZE       := 2048
 # Define Prebuilt kernel locations
-TARGET_PREBUILT_KERNEL      := device/pantech/ef65l/prebuilt/kernel
+TARGET_PREBUILT_KERNEL      := device/pantech/ef65l/prebuilt/zImage
 
 # fs
 TARGET_USERIMAGES_USE_EXT4         := true
