@@ -3,6 +3,7 @@
 /dev/kgsl-2d1             0666   root       root
 
 # these should not be world writable
+/dev/genlock              0666   root       root
 /dev/sdio_tty_ciq_00      0660   system     system
 /dev/msm_rotator          0660   system     graphics
 /dev/pmem_audio           0660   system     audio
