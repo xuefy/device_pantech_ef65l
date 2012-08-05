@@ -33,8 +33,23 @@ endif
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
+    device/pantech/ef65l/modules/ansi_cprng.ko:system/lib/modules/ansi_cprng.ko \
+    device/pantech/ef65l/modules/cpaccess.ko:system/lib/modules/cpaccess.ko \
+    device/pantech/ef65l/modules/dal_remotetest.ko:system/lib/modules/dal_remotetest.ko \
+    device/pantech/ef65l/modules/dma_test.ko:system/lib/modules/dma_test.ko \
+    device/pantech/ef65l/modules/evbug.ko:system/lib/modules/evbug.ko \
+    device/pantech/ef65l/modules/gspca_main.ko:system/lib/modules/gspca_main.ko \
+    device/pantech/ef65l/modules/ksapi.ko:system/lib/modules/ksapi.ko \
+    device/pantech/ef65l/modules/lcd.ko:system/lib/modules/lcd.ko \
+    device/pantech/ef65l/modules/librasdioif.ko:system/lib/modules/librasdioif.ko \
+    device/pantech/ef65l/modules/msm_tsif.ko:system/lib/modules/msm_tsif.ko \
     device/pantech/ef65l/modules/mwlan_aarp.ko:system/lib/modules/mwlan_aarp.ko \
+    device/pantech/ef65l/modules/oprofile.ko:system/lib/modules/oprofile.ko \
+    device/pantech/ef65l/modules/qcedev.ko:system/lib/modules/qcedev.ko \
+    device/pantech/ef65l/modules/qce.ko:system/lib/modules/qce.ko \
+    device/pantech/ef65l/modules/qcrypto.ko:system/lib/modules/qcrypto.ko \
     device/pantech/ef65l/modules/scsi_wait_scan.ko:system/lib/modules/scsi_wait_scan.ko \
+    device/pantech/ef65l/modules/tsif_chrdev.ko:system/lib/modules/tsif_chrdev.ko \
     device/pantech/ef65l/modules/wlan.ko:system/lib/modules/wlan.ko
 
 # Ramdisk
