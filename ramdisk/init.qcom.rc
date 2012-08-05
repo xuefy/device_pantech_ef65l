@@ -24,6 +24,15 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+on early-init
+    mkdir /mnt/sdcard 0000 system system
+    # for backwards compatibility
+    symlink /mnt/sdcard /sdcard
+
+    mkdir /mnt/emmc 0000 system system
+    symlink /mnt/emmc /emmc
+
+    export EXTERNAL_STORAGE /mnt/emmc
 
 on boot-pause
     exec system/bin/battery_charging
